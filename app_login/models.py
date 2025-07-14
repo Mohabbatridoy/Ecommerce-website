@@ -12,7 +12,7 @@ from django.dispatch import receiver
 class MyUserManager(BaseUserManager):
     """ a custom manager to deal with emails as unique identifire """
     def _create_user(self, email, password, **extra_fields):
-        """ creates and saves a user with a given email and apssword """
+        """ creates and saves a user with a given email and a pssword """
         if not email:
             raise ValueError("the email must be set")
 
@@ -76,7 +76,7 @@ class Profile(models.Model):
 
 
     def is_fully_filled(self):
-        fields_names = [f.name for f in self.meta.get_fields()]
+        fields_names = [f.name for f in self._meta.get_fields()]
         for field_name in fields_names:
             value = getattr(self, field_name)
             if value is None or value == '':
