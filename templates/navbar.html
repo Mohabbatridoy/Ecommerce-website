@@ -1,7 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a href="{% url 'app_shop:home' %}" class="navbar-brand">Django E-commerce Project</a>
 
+        <!-- Navbar toggler (Bootstrap 5 syntax) -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,16 +10,34 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                {% if request.user.is_authenticated %}
+                <!-- 🛒 Cart link -->
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="fa-solid fa-cart-shopping me-1"></i> Cart
                     </a>
                 </li>
+
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="#">
-                        <i class="fa-solid fa-user me-1"></i> Profile
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user me-1"></i> {{request.user.profile.username}}
                     </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="{% url 'app_login:edit_profile' %}"><i class="fa-solid fa-user-pen me-2"></i> My Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'app_login:edit_profile' %}"><i class="fa-solid fa-box me-2"></i> Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'app_login:edit_profile' %}"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'app_login:logout' %}"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li>
+                    </ul>
                 </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-primary ms-3 px-3 py-1" href="{% url 'app_login:login' %}">
+                            <i class="fa-solid fa-right-to-bracket me-1"></i> Login
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
