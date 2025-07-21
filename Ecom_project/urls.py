@@ -9,6 +9,7 @@ urlpatterns = [
     path('', Home.as_view(), name="home"),
     path('Shop/', include('app_shop.urls')),
     path('account/', include('app_login.urls')),
+    path('shop/', include('app_order.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
