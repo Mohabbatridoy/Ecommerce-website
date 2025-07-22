@@ -25,7 +25,7 @@
                         <dt>Description</dt>
                         <dd><p>{{object.details_text|linebreaks}}</p></dd>
                     </dl>
-                    <a href="{ url 'app_order:add' pk=object.pk %}" class="btn btn-lg btn-outline-primary text-uppercase"><i class="fa-solid fa-cart-shopping me-1"></i>Add to cart</a>
+                    <a href="{% url 'app_order:add' pk=object.pk %}" class="btn btn-lg btn-outline-primary text-uppercase"><i class="fa-solid fa-cart-shopping me-1"></i>Add to cart</a>
                 </article>
             </aside>
         </div>
