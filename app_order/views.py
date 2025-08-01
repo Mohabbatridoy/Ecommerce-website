@@ -24,7 +24,7 @@ def Add_to_cart(request, pk):
         order = order_qs[0]
         if order.orderitems.exists():
             cart_item[0].quantity += 1
-            cart_item.save()
+            cart_item[0].save()
             messages.info(request, "This item quantity was updated!")
             return redirect('app_shop:home')
         else:

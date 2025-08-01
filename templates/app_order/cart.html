@@ -26,13 +26,20 @@
                     <a href="#" class="me-2"><span><i class="fas fa-plus"></i></span></a>
                 </td>
                 <td>&#2547; {{cart.get_total}}</td>
+                <td><a href="" class="btn btn-danger bt-sm">Remove from cart</a></td>
             </tr>
             {% endfor %}
             <tr>
                 <th scope="row"></th>
                 <td colspan="2">Total</td>
-                <td >&#2547; {{order.get_totals}}</td>
-                print(order.get_totals)
+                <td >&#2547; {{order.get_totals | floatformat:2}}</td>
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td colspan="4" class="text-end">
+                    <a href="{% url 'app_shop:home' %}" class="btn btn-warning">Continue Shopping</a>
+                    <a href="#" class="btn btn-success">Processed to Check out</a>
+                </td>
             </tr>
         </tbody>
     </table>
