@@ -26,7 +26,7 @@
                     <a href="#" class="me-2"><span><i class="fas fa-plus"></i></span></a>
                 </td>
                 <td>&#2547; {{cart.get_total}}</td>
-                <td><a href="" class="btn btn-danger bt-sm">Remove from cart</a></td>
+                <td><a href="{% url 'app_order:remove' pk=cart.item.pk %}" class="btn btn-danger bt-sm">Remove from cart</a></td>
             </tr>
             {% endfor %}
             <tr>

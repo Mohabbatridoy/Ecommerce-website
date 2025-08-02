@@ -22,7 +22,7 @@ def Add_to_cart(request, pk):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        if order.orderitems.exists():
+        if order.orderitems.filter(item=item).exists():
             cart_item[0].quantity += 1
             cart_item[0].save()
             messages.info(request, "This item quantity was updated!")
@@ -36,7 +36,7 @@ def Add_to_cart(request, pk):
         order.save()
         order.orderitems.add(cart_item[0])
         messages.info(request, "This item was added to your cart!")
-        return redirect('app-shop:home')
+        return redirect('app_shop:home')
     
 @login_required
 def cart_view(request):
@@ -47,4 +47,24 @@ def cart_view(request):
         return render(request, 'app_order/cart.html', context={'carts':carts,'order':order})
     else:
         messages.warning(request, "You don't have any item in your cart!")
+        return redirect('app_shop:home')
+    
+@login_required
+def remove_from_cart(request, pk):
+    item = get_object_or_404(Product, pk=pk)
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.orderitems.filter(item=item).exists():
+            order_item = Cart.objects.filter(item=item, user=request.user, purchased=False)[0]
+            order.orderitems.remove(order_item)
+            order_item.delete()
+            messages.warning(request, "This item was removed from your cart!")
+            return redirect('app_order:cart')
+        else:
+            messages.info(request, "This item was not in the cart!")
+            return redirect('app_shop:home')
+    else:
+        messages.info(request, "Your Cart is empty!")
         return redirect('app_shop:home')
