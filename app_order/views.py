@@ -108,7 +108,7 @@ def decrease_item(request, pk):
                 order.orderitems.remove(cart_item) 
                 cart_item.delete() 
                 messages.warning(request, f"{item.name} was removed from cart!")             
-                return redirect('app_shop:home')
+                return redirect('app_order:cart')
         else:
             messages.info(request, f"{item.name} was not in your cart!")
             return redirect('app_shop:home')
