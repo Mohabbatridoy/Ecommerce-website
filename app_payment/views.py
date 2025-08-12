@@ -20,4 +20,4 @@ def checkout(request):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     order_items = order_qs[0].orderitems.all()
     order_total = order_qs[0].get_totals()
-    return render(request, 'app_payment/checkout.html', context={'form':form, 'order_items':order_items, 'order_totals':order_total})
+    return render(request, 'app_payment/checkout.html', context={'form':form, 'order_items':order_items, 'order_totals':order_total, 'saved_address':saved_address})
