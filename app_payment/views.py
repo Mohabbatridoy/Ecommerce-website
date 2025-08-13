@@ -5,6 +5,8 @@ from .forms import BillingForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+#payment
+
 # Create your views here.
 @login_required
 def checkout(request):
@@ -21,3 +23,17 @@ def checkout(request):
     order_items = order_qs[0].orderitems.all()
     order_total = order_qs[0].get_totals()
     return render(request, 'app_payment/checkout.html', context={'form':form, 'order_items':order_items, 'order_totals':order_total, 'saved_address':saved_address})
+
+
+@login_required
+def payment(request):
+    saved_address = BillingAddress.objects.get_or_create(user=request.user)
+    if not saved_address[0].is_fully_filled():
+        messages.info(request, f"Please Fill out all the address information!")
+        return redirect('app_payment:checkout')
+    
+    if not request.user.profile.is_fully_filled():
+        messages.info(request, f"Please complete your profile Informations!")
+        return redirect('app_login:edit_profile')
+
+    return render(request, 'app_payment/payment.html', context={})

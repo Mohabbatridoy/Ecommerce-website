@@ -22,4 +22,4 @@ class BillingAddress(models.Model):
         return True
 
     class Meta:
-        verbose_name_plural = "Billing Address"
+        verbose_name_plural = "BillingAddress"
